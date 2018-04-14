@@ -1,0 +1,24 @@
+{
+  "name": "bananapp",
+  "version": "1.0.0",
+  "description": "sample js game",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hekow/bananapp.git"
+  },
+  "author": "us",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hekow/bananapp/issues"
+  },
+  "homepage": "https://github.com/hekow/bananapp#readme",
+  "dependencies": {
+    "http-server": "^0.11.1",
+    "phaser": "^3.4.0",
+    "phaser3-project-template": "^1.0.9"
+  }
+}
