@@ -7,65 +7,70 @@
 <h1>Bananapp</h1>
 <script>
     var config = {
-        type: Phaser.AUTO,
+        type: Phaser.WEBGL,
         width: 800,
         height: 600,
-        physics: {
-            default: 'arcade',
-            arcade: {
-                gravity: { y: 200 }
-            }
-        },
+        backgroundColor: '#ffffff',
+        parent: 'phaser-example',
+        pixelArt: true,
         scene: {
             preload: preload,
-            create: create
+            create: create,
+            update: update
         }
     };
 
     var game = new Phaser.Game(config);
+    var controls;
 
     function preload ()
     {
-        // this.load.setBaseURL('http://labs.phaser.io');
-        this.load.image('water', 'water_tile.jpg');
+        this.load.image('walls_1x2', 'water_tile.jpg');
     }
-var map;
-    var layer1;
+
     function create ()
     {
-        //  Creates a blank tilemap
-        map = this.add.tilemap();
+        // Load a blank map with a 32 x 32 px tile size. This is the base tile size. This means that
+        // tiles in the map will be placed on a 32 x 32 px grid.
+        var map = this.make.tilemap({ width: 200, height: 200, tileWidth: 32, tileHeight: 32 });
 
-        //  Add a Tileset image to the map
-        map.addTilesetImage('water');
+        // You can also change the base tile size of map like this:
+        // map.setBaseTileSize(32, 32);
 
-        //  Creates a new blank layer and sets the map dimensions.
-        //  In this case the map is 40x30 tiles in size and the tiles are 32x32 pixels in size.
-        layer1 = map.create('level1', 40, 30, 32, 32);
-        layer1.scrollFactorX = 0.5;
-        layer1.scrollFactorY = 0.5;
+        // Load a 32 x 64 px tileset. This tileset was designed to allow tiles to overlap vertically, so
+        // placing them on a 32 x 32 grid is exactly what we want.
+        var tiles = map.addTilesetImage('walls_1x2', null, 32, 32);
 
-        //  Resize the world
-        layer1.resizeWorld();
+        // Create a layer filled with random trees
+        var layer = map.createBlankDynamicLayer('layer1', tiles);
+        layer.randomize(0, 0, map.width, map.height, [ 0]);
 
-        // this.add.image(400, 300, 'sky');
+        var cursors = this.input.keyboard.createCursorKeys();
+        var controlConfig = {
+            camera: this.cameras.main,
+            left: cursors.left,
+            right: cursors.right,
+            up: cursors.up,
+            down: cursors.down,
+            speed: 0.5
+        };
+        controls = new Phaser.Cameras.Controls.Fixed(controlConfig);
 
-        // var particles = this.add.particles('red');
-
-        // var emitter = particles.createEmitter({
-        //     speed: 100,
-        //     scale: { start: 1, end: 0 },
-        //     blendMode: 'ADD'
-        // });
-
-        // var logo = this.physics.add.image(400, 100, 'logo');
-
-        // logo.setVelocity(100, 200);
-        // logo.setBounce(1, 1);
-        // logo.setCollideWorldBounds(true);
-
-        // emitter.startFollow(logo);
+        var help = this.add.text(16, 16, 'Arrows to scroll', {
+            fontSize: '18px',
+            padding: { x: 10, y: 5 },
+            backgroundColor: '#000000',
+            fill: '#ffffff'
+        });
+        help.setScrollFactor(0);
     }
+
+    function update (time, delta)
+    {
+        controls.update(delta);
+    }
+
+
 </script>
 
 </body>
