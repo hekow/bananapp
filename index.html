@@ -27,14 +27,14 @@
     function preload ()
     {
         // this.load.setBaseURL('http://labs.phaser.io');
-        game.load.image('water', 'water_tile.jpg');
+        this.load.image('water', 'water_tile.jpg');
     }
 var map;
     var layer1;
     function create ()
     {
         //  Creates a blank tilemap
-        map = game.add.tilemap();
+        map = this.add.tilemap();
 
         //  Add a Tileset image to the map
         map.addTilesetImage('water');
