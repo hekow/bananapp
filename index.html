@@ -26,32 +26,45 @@
 
     function preload ()
     {
-        this.load.setBaseURL('http://labs.phaser.io');
-
-        this.load.image('sky', 'assets/skies/space3.png');
-        this.load.image('logo', 'assets/sprites/phaser3-logo.png');
-        this.load.image('red', 'assets/particles/red.png');
+        // this.load.setBaseURL('http://labs.phaser.io');
+        game.load.image('water', 'water_tile.jpg');
     }
-
+var map;
+    var layer1;
     function create ()
     {
-        this.add.image(400, 300, 'sky');
+        //  Creates a blank tilemap
+        map = game.add.tilemap();
 
-        var particles = this.add.particles('red');
+        //  Add a Tileset image to the map
+        map.addTilesetImage('water');
 
-        var emitter = particles.createEmitter({
-            speed: 100,
-            scale: { start: 1, end: 0 },
-            blendMode: 'ADD'
-        });
+        //  Creates a new blank layer and sets the map dimensions.
+        //  In this case the map is 40x30 tiles in size and the tiles are 32x32 pixels in size.
+        layer1 = map.create('level1', 40, 30, 32, 32);
+        layer1.scrollFactorX = 0.5;
+        layer1.scrollFactorY = 0.5;
 
-        var logo = this.physics.add.image(400, 100, 'logo');
+        //  Resize the world
+        layer1.resizeWorld();
 
-        logo.setVelocity(100, 200);
-        logo.setBounce(1, 1);
-        logo.setCollideWorldBounds(true);
+        // this.add.image(400, 300, 'sky');
 
-        emitter.startFollow(logo);
+        // var particles = this.add.particles('red');
+
+        // var emitter = particles.createEmitter({
+        //     speed: 100,
+        //     scale: { start: 1, end: 0 },
+        //     blendMode: 'ADD'
+        // });
+
+        // var logo = this.physics.add.image(400, 100, 'logo');
+
+        // logo.setVelocity(100, 200);
+        // logo.setBounce(1, 1);
+        // logo.setCollideWorldBounds(true);
+
+        // emitter.startFollow(logo);
     }
 </script>
 
